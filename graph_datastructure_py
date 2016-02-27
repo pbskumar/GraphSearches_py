@@ -1,0 +1,114 @@
+
+class Graph:
+    """
+    Graph Class represents all types of the Graph Data Structures (Weighted/Uniform paths, Directed/Bi-directional) in the form of a dictionary
+
+    Ex: Directed path from node 'A' to 'B' with path cost 'c' is represented as follows:
+            graph = {
+                        'A' : [('B', c)]
+                    }
+    """
+
+    def __init__(self, graph_dict={}):
+        """
+        Initializes the dictionary
+        :param graph_dict: A predefined dictionary mapping can be provided as an input.
+                            In default case an empty dictionary is initialized.
+        """
+        self.__graph_dict = graph_dict
+
+    def create_node(self, nodeID):
+        """
+        To create a new node on the graph.
+        Inserts the new node as a key to the graph and initializes it to an empty list.
+        :param nodeID: Identifier of the new node.
+        """
+        if nodeID.title() not in self.__graph_dict.keys():
+            self.__graph_dict[nodeID.title()] = []
+
+    def create_arc(self, origin, destination, cost=1):
+        """
+        Inserts a directed(uni-directional) path from origin to destination to the graph.
+        :param origin: Identifier of the origin node
+        :param destination: Identifier of the origin node
+        :param cost: Cost of the path. By default the cost is initialized to 1.
+        """
+        if origin.title() not in self.__graph_dict:
+            self.create_node(origin.title())
+        if destination.title() not in self.__graph_dict[origin.title()]:
+            self.__graph_dict[origin.title()].append((destination.title(), int(cost)))
+
+    def create_edge(self, origin, destination, cost=1):
+
+        """
+        Inserts a bi-directional path from origin to destination to the graph.
+        :param origin: Identifier of one node.
+        :param destination: Identifier of the other node.
+        :param cost: Cost of the path. By default the cost is initialized to 1.
+        """
+        if origin not in self.__graph_dict:
+            self.create_node(origin)
+        if destination not in self.__graph_dict:
+            self.create_node(destination)
+
+        self.create_arc(origin, destination, cost)
+        self.create_arc(destination, origin, cost)
+
+    def get_graph_nodes(self):
+        """
+        :return: Returns a list of all the nodes in the Graph
+        """
+        return deepcopy(list(self.__graph_dict.keys()))
+
+    def get_graph_dict(self):
+        """
+        :return: Returns the entire Graph as a dictionary
+        """
+        return deepcopy(self.__graph_dict)
+
+
+class Node:
+    """
+    Node class is the atomic part of a tree.
+    """
+    def __init__(self, node_identifier, parent=None, edge_cost=0):
+        """
+        self.__total_path_cost is cost from the root node to the current node.
+        :param node_identifier: Identifier of the node
+        :param parent: Reference to the parent node.
+        :param edge_cost: Is the path cost from parent to current node.
+        """
+        self.__node_identifier = node_identifier
+        self.__parent = parent
+        try:
+            self.__total_path_cost = int(parent.get_total_cost()) + edge_cost
+        except AttributeError:
+            self.__total_path_cost = int(edge_cost)
+
+    def get_node_identifier(self):
+        """
+        :return: Returns the node identifier
+        """
+        return self.__node_identifier
+
+    def get_parent(self):
+        """
+        :return: Returns reference to the parent of the current node
+        """
+        return self.__parent
+
+    def add_child_node(self, child_node_identifier, cost_to_reach_child_node):
+        """
+        :param child_node_identifier: Identifier of the child node
+        :param cost_to_reach_child_node: Path cost from parent to child node
+        :return: Returns the reference of the child node generated
+        """
+        child_node = Node(child_node_identifier, self, cost_to_reach_child_node)
+        return child_node
+
+    def get_total_cost(self):
+        """
+        :return: Returns the total path cost from root node to current node.
+        """
+        return self.__total_path_cost
+
