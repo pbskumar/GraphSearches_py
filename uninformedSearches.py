@@ -338,7 +338,7 @@ def iterative_deepening_search(graph, origin, destination, step_size=1):
 
 # Main program
 if __name__ == "__main__":
-    input_file_name = 'route_PA1.csv'
+    input_file_name = 'route.csv'   #Available in the repository
     input_data = read_file_data(input_file_name)
     # print(input_data)
     
