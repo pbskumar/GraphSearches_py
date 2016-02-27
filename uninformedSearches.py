@@ -337,39 +337,40 @@ def iterative_deepening_search(graph, origin, destination, step_size=1):
 
 
 # Main program
-input_file_name = 'route_PA1.csv'
-input_data = read_file_data(input_file_name)
-# print(input_data)
-
-city_map = Graph()
-for route in input_data:
-    city_map.create_edge(*route)
-
-# pprint.pprint(city_map.get_graph_dict())
-# pprint.pprint(city_map.get_graph_nodes())
-
-# bfs_route = breadth_first_search(city_map, 'Neamt', "Oradea")
-
-while True:
-    print("\n\n-------------------------------------------------\n")
-    origin_city = raw_input('Enter name of the city of origin: ')
-    destination_city = raw_input('Enter name of the destination city: ')
-    selected_search_algorithm = raw_input('Select an algorithm. (Enter option number)\n\
-1. Breadth First Search\n2. Depth First Search\n3. Iterative Deepening Search\nEnter your choice:\t ')
-
-    if int(selected_search_algorithm) == 1:
-        bfs_route = breadth_first_search(city_map, origin_city.strip().title(), destination_city.strip().title())
-        print "\nBFS Route:\t" + bfs_route + "\n"
-    elif int(selected_search_algorithm) == 2:
-        dfs_route = depth_first_search(city_map, origin_city.strip().title(), destination_city.strip().title())
-        print "\nDFS Route: \t" + dfs_route + "\n"
-    elif int(selected_search_algorithm) == 3:
-        step_size = raw_input('Enter step size for iterative deepening: ')
-        ids_route = iterative_deepening_search(city_map, origin_city.strip().title(), destination_city.strip().title(), int(step_size))
-        print "\nIterative Deep Search Route: \t" + ids_route + "\n"
-    else:
-        print "Select valid options\n"
-
-    exit_key = raw_input("Do you want to continue (y/n): ")
-    if exit_key.lower() != 'y':
-        break
+if __name__ == "__main__":
+    input_file_name = 'route_PA1.csv'
+    input_data = read_file_data(input_file_name)
+    # print(input_data)
+    
+    city_map = Graph()
+    for route in input_data:
+        city_map.create_edge(*route)
+    
+    # pprint.pprint(city_map.get_graph_dict())
+    # pprint.pprint(city_map.get_graph_nodes())
+    
+    # bfs_route = breadth_first_search(city_map, 'Neamt', "Oradea")
+    
+    while True:
+        print("\n\n-------------------------------------------------\n")
+        origin_city = raw_input('Enter name of the city of origin: ')
+        destination_city = raw_input('Enter name of the destination city: ')
+        selected_search_algorithm = raw_input('Select an algorithm. (Enter option number)\n\
+    1. Breadth First Search\n2. Depth First Search\n3. Iterative Deepening Search\nEnter your choice:\t ')
+    
+        if int(selected_search_algorithm) == 1:
+            bfs_route = breadth_first_search(city_map, origin_city.strip().title(), destination_city.strip().title())
+            print "\nBFS Route:\t" + bfs_route + "\n"
+        elif int(selected_search_algorithm) == 2:
+            dfs_route = depth_first_search(city_map, origin_city.strip().title(), destination_city.strip().title())
+            print "\nDFS Route: \t" + dfs_route + "\n"
+        elif int(selected_search_algorithm) == 3:
+            step_size = raw_input('Enter step size for iterative deepening: ')
+            ids_route = iterative_deepening_search(city_map, origin_city.strip().title(), destination_city.strip().title(), int(step_size))
+            print "\nIterative Deep Search Route: \t" + ids_route + "\n"
+        else:
+            print "Select valid options\n"
+    
+        exit_key = raw_input("Do you want to continue (y/n): ")
+        if exit_key.lower() != 'y':
+            break
